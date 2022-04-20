@@ -1,0 +1,6 @@
+// This should be your 'config.json'
+{
+	"clientId": "Your bot's clientId",
+	"guildId": "Implementation guildID(before going global)",
+	"token": "Your bot's token"
+}
