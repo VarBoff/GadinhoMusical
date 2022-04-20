@@ -1,25 +1,36 @@
-const { token } = require('./config.json');
-
-require('dotenv').config();
+const { token } = require("./config.json");
 const Discord = require("discord.js");
-const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
+const fs = require("node:fs");
+const { Client, Collection, Intents } = require("discord.js");
 
-client.once("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
+
+client.commands = new Collection();
+const commandFiles = fs.readdirSync("./commands");
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.data.name, command);
+}
+
+client.on("interactionCreate", async (interaction) => {
+    const command = client.commands.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({
+            content: `Erro! ${error}`,
+            ephemeral: true,
+        });
+    }
 });
 
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-
-	const { commandName } = interaction;
-
-	if (commandName === 'ping') {
-		await interaction.reply('🏓 **| Pong!**\nLatência do Server: **${m.createdTimestamp - \
-      message.createdTimestamp}ms.**\nLatência da API: **${Math.round(\
-      client.ws.ping )}ms**');
-	} else if (commandName === 'novidades') {
-    	await interaction.reply('Apenas em breve');
-	}
+client.once("ready", () => {
+    console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.login(token);
