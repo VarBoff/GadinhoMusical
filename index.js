@@ -5,6 +5,7 @@ const { Client, Collection, Intents } = require("discord.js");
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
+// Command Handling
 client.commands = new Collection();
 const commandFiles = fs.readdirSync("./commands");
 
@@ -13,24 +14,16 @@ for (const file of commandFiles) {
     client.commands.set(command.data.name, command);
 }
 
-client.on("interactionCreate", async (interaction) => {
-    const command = client.commands.get(interaction.commandName);
+// Event Handling
+const eventFiles = fs.readdirSync('./events');
 
-    if (!command) return;
-
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error(error);
-        await interaction.reply({
-            content: `Erro! ${error}`,
-            ephemeral: true,
-        });
-    }
-});
-
-client.once("ready", () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-});
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
 
 client.login(token);
