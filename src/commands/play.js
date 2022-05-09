@@ -55,13 +55,13 @@ module.exports = {
 
 		const embed = new MessageEmbed()
 			.setColor(`RANDOM`)
-			.setTitle("Adicionada à fila!")
+			.setTitle("Adicionada!")
 			.setDescription(
 				`${
 					track.playlist
 						? `Playlist: **${track.playlist.title}**`
 						: `Musica: **${track.tracks[0].title}**`
-				} foi adicionada`
+				} foi adicionada à fila`
 			);
 
 		if (!queue.playing) {
