@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { QueryType } = require("discord-player");
+const { QueryType, QueueRepeatMode } = require("discord-player");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
         });
 
         if (!track || !track.tracks.length)
-            return await interaction.reply({
+            return await interaction.editReply({
                 content: `não achei nenhum **${track}**`,
             });
 
@@ -63,17 +63,18 @@ module.exports = {
                         : `Musica: **${track.tracks[0].title}**`
                 } foi adicionada à fila`
             );
-
-        if (!queue.playing) {
-            track.playlist
-                ? queue.addTracks(track.tracks)
-                : queue.play(track.tracks[0]);
-            return await interaction.editReply({ embeds: [embed] });
-        } else if (queue.playing) {
-            track.playlist
-                ? queue.addTracks(track.tracks)
-                : queue.addTrack(track.tracks[0]);
-            return await interaction.editReply({ embeds: [embed] });
+        if (!track.playlist) {
+            embed.setThumbnail(track.tracks[0].thumbnail);
         }
+
+        if (track.playlist) {
+            queue.addTracks(track.tracks);
+            await interaction.editReply({ embeds: [embed] });
+        } else {
+            queue.addTrack(track.tracks[0]);
+            await interaction.editReply({ embeds: [embed] });
+        }
+
+        if (!queue.playing) await queue.play();
     },
 };
