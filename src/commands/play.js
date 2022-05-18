@@ -61,11 +61,14 @@ module.exports = {
                     track.playlist
                         ? `Playlist: **${track.playlist.title}**`
                         : `Musica: **${track.tracks[0].title}**`
-                } foi adicionada à fila`
-            );
-        if (!track.playlist) {
-            embed.setThumbnail(track.tracks[0].thumbnail);
-        }
+                } foi adicionada à fila\n
+                ${
+                    track.playlist
+                        ? `**${track.tracks.length}** musicas adicionadas!`
+                        : ``
+                }`
+            )
+            .setThumbnail(track.tracks[0].thumbnail);
 
         if (track.playlist) {
             queue.addTracks(track.tracks);
