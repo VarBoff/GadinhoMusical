@@ -1,23 +1,23 @@
 {
-  "dependencies": {
-    "@discordjs/builders": "^0.13.0",
-    "@discordjs/opus": "^0.5.3",
-    "@discordjs/rest": "^0.4.1",
-    "discord-api-types": "^0.31.2",
-    "discord-player": "^5.2.2",
-    "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0",
-    "eslint": "^8.15.0",
-    "ffmpeg-static": "^4.4.1"
-  },
-  "name": "teste",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "dependencies": {
+        "@discordjs/builders": "^0.13.0",
+        "@discordjs/opus": "^0.5.3",
+        "@discordjs/rest": "^0.4.1",
+        "discord-api-types": "^0.31.2",
+        "discord-player": "^5.2.2",
+        "discord.js": "^13.6.0",
+        "dotenv": "^16.0.0",
+        "eslint": "^8.15.0",
+        "ffmpeg-static": "^4.4.1"
+    },
+    "name": "teste",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"No test specified\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": ""
 }
