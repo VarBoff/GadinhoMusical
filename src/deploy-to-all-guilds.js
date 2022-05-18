@@ -2,7 +2,9 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const fs = require("node:fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { clientId, guildId, token } = require("../config.json");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const commands = [];
 const commandFiles = fs
@@ -14,14 +16,14 @@ for (const file of commandFiles) {
     commands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: "9" }).setToken(token);
+const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
 
 // Apply commands to all guilds
 (async () => {
     try {
         console.log("Started refreshing application (/) commands.");
 
-        await rest.put(Routes.applicationCommands(clientId), {
+        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
             body: commands,
         });
 

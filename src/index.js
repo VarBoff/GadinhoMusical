@@ -1,8 +1,10 @@
-const { token } = require("../config.json");
 const Discord = require("discord.js");
 const fs = require("node:fs");
 const { Client, Collection, Intents } = require("discord.js");
 const { Player } = require("discord-player");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const client = new Discord.Client({
     intents: [
@@ -45,4 +47,4 @@ for (const file of eventFiles) {
     }
 }
 
-client.login(token);
+client.login(process.env.TOKEN);
