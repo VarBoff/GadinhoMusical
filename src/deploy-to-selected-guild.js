@@ -16,13 +16,13 @@ for (const file of commandFiles) {
     commands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
+const rest = new REST({ version: "9" }).setToken(process.env.APPSETTING_TOKEN);
 
 // Applies commands to specified guild only
 rest.put(
     Routes.applicationGuildCommands(
-        process.env.CLIENT_ID,
-        process.env.GUILD_ID
+        process.env.APPSETTING_CLIENT_ID,
+        process.env.APPSETTING_GUILD_ID
     ),
     { body: commands }
 )

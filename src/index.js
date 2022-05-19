@@ -47,4 +47,4 @@ for (const file of eventFiles) {
     }
 }
 
-client.login(process.env.TOKEN);
+client.login(process.env.APPSETTING_TOKEN);
